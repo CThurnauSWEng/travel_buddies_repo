@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>User</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'travel_app/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+    </head>
+    <body>
+        <div>
+            <a href="/travels/dashboard" class="navbar1">Home</a>
+            <a href="/user/logout" class="navbar2">Logout</a>
+        </div>
+        <h2>{{ this_trip.destination }}</h2>
+        <h3>Planned By: {{ this_trip.plannedBy }}</h3>
+        <h3>Description: {{ this_trip.description }}</h3>
+        <h3>Travel Date From: {{ this_trip.dateFrom }}</h3>
+        <h3>Travel Date To: {{ this_trip.dateTo }}</h3>
+        <h2>Others users joining the trip:</h2>
+        {% for user in others_on_trip %}
+            <h3>{{ user.name }} </h3>
+        {% endfor %}
+    </body>
+</html>

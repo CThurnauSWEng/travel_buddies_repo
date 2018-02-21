@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>User</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'travel_app/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+    </head>
+    <body>
+        <div>
+            <a href="/user/logout" class="navbar1">Logout</a>
+        </div>
+        <h3>Hello {{ request.session.name }}</h3>
+        <h2>Your Trip Schedules</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Plan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in this_users_trips %}
+                    <tr>
+                        <td><a href="/travels/destination/{{ trip.id }}">{{ trip.destination }}</a></td>
+                        <td>{{ trip.dateFrom }}</td>
+                        <td>{{ trip.dateTo }}</td>
+                        <td>{{ trip.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h2>Other User's Travel Plans</h2>
+        <table>
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Travel Start Date</th>
+                        <th>Travel End Date</th>
+                        <th>Plan</th>
+                        <th>Do You Want to Join</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trip in other_trips %}
+                        <tr>
+                            <td><a href="/travels/destination/{{ trip.id }}">{{ trip.destination }}</td>
+                            <td>{{ trip.dateFrom }}</td>
+                            <td>{{ trip.dateTo }}</td>
+                            <td>{{ trip.description }}</td>
+                            <td>
+                                <form action="/travels/join/" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="trip_id" value="{{trip.id}}">
+                                    <input type="submit" name="" value="Join">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/travels/add">Add a travel plan</a>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>User</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'travel_app/css/style.css' %}" media="screen" title="no title"  charset="utf-8">
+    </head>
+    <body>
+        <div>
+            <a href="/travels/dashboard" class="navbar1">Home</a>
+            <a href="/user/logout" class="navbar2">Logout</a>
+        </div>
+        <p>Hello {{ request.session.name }}</p>
+        <h3>Add a Trip</h3>
+        <form action="/travels/process_create_trip/" method="POST">
+            {% csrf_token %}
+            <label>Destination:</label>
+            <input type="text" name="destination" value="">
+            <label>Description:</label>
+            <input type="text" name="description" value="">
+            <label>Travel Date From:</label>
+            <input type="date" name="dateFrom" value="">
+            <label>Travel Date To:</label>
+            <input type="date" name="dateTo" value="">
+            <input type="hidden" name="user_id" value="{{request.session.user_id}}" >
+            <input type="submit" class="button" value="Add">
+        </form>
+        {% for error in request.session.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}                        
+    </body>
+</html>
